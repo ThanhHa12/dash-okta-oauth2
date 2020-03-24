@@ -1,13 +1,18 @@
-# Dash Okta Auth
+# Dash Okta OAuth2
 
-Dash Okta Auth is a simple library using Okta OAuth to authenticate and
+Dash Okta Auth is a simple library using Okta OAuth2 to authenticate and
 view a [Dash](https://dash.plot.ly/) app.
 
 This Library uses [Flask Dance](https://github.com/singingwolfboy/flask-dance)
 and a modified version of Plotly's own [dash auth](https://github.com/plotly/dash-auth)
 for authentication.
 
-This Library is heavily inspired by [dash-google-oauth](https://github.com/lchapo/dash-google-auth) created by Lucas Chapin
+This Library is heavily inspired by [dash-google-oauth](https://github.com/lchapo/dash-google-auth) 
+created by Lucas Chapin and forked from [dash-okta-auth](https://github.com/fspijkerman/dash-okta-auth) 
+created by Frank Spijkerman.
+
+I decided to deploy to pip after I received no response to this 
+[issue](https://github.com/fspijkerman/dash-okta-auth/issues/2).
 
 ## Basic Use
 
@@ -17,18 +22,20 @@ class, i.e.
 ```python
 from dash import Dash
 from flask import Flask
-from dash_okta_auth import OktaOAuth
+from dash_okta_oauth2 import OktaOAuth
 
 server = Flask(__name__)
 server.config.update({
   'OKTA_OAUTH_CLIENT_ID': ...,
   'OKTA_OAUTH_CLIENT_SECRET': ...,
+  'OKTA_BASE_URL': ...
 })
 
-app = Dash(__name__, server=server, url_base_pathname='/', auth='auth')
+app = Dash(__name__, server=server, url_base_pathname='/')
+
 
 additional_scopes = [...]
-auth = OktaOAuth(app, base_url='https://myoktadomain.okta-emea.com', additional_scopes)
+auth = OktaOAuth(app, additional_scopes)
 
 # your Dash app here :)
 ...
@@ -40,13 +47,13 @@ Steps to try this out yourself:
 1. Install the `dash-okta-auth` library using `pip`:
 
     ```bash
-    $ pip install dash-okta-auth
+    $ pip install dash-okta-oauth2
     ```
 
-2. Follow the [Flask Dance Guide](http://flask-dance.readthedocs.io/en/latest/quickstarts/okta.html)
+2. Follow the [Flask Dance Guide](https://flask-dance.readthedocs.io/en/latest/quickstart.html)
    to create an app on the okta admin console
 
-3. Make a copy of [app.py](https://github.com/lucaschapin/dash-okta-auth/blob/master/app.py)
+3. Make a copy of [app.py](https://github.com/nicohein/dash-okta-oauth2/blob/master/app.pyy)
    and set the variables (or set the corresponding environment variables):
     ```python
     server.config["OKTA_OAUTH_CLIENT_ID"] = ...
